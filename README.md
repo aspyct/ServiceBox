@@ -1,7 +1,7 @@
 Usage example
 ===
 
-```
+```csharp
 /*
  * First, define your dependencies
  */
