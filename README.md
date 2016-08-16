@@ -2,32 +2,49 @@ Usage example
 ===
 
 ```
-class PlayerServiceBox : ServiceBox
+/*
+ * First, define your dependencies
+ */
+[AutoProvider(
+    typeof(IMessageService), // the interface you want to provide
+    typeof(DefaultMessageService), // the implementing class
+    singleton: true // this must be a singleton
+)]
+public class BaseConfiguration : ServiceBox
 {
-    [Provider(singleton: true)]
-    public IPlayerManager MakePlayerManager()
-    {
-        return CreateAndInject<PlayerManager>();
-    }
-
+    // Or you can also define a method provider
     [Provider]
-    public IViewModel MakeViewModel()
+    public IGreeter MakeGreeter()
     {
-        return CreateAndInject<ViewModel>();
+        return CreateAndInject<Greeter>();
     }
 }
 
-class ViewModel : IViewModel
+/*
+ * Then, define stuff that requires these dependencies
+ */
+public class Greeter : IGreeter
 {
     [Injected]
-    public IPlayerManager Service { get; set; }
+    public IMessageService MessageService { get; set; }
 
-    public void PlayButtonTapped()
+    public void Greet()
     {
-        Service.Play();
+        Console.WriteLine(MessageService.GetMessage());
     }
 }
+
+/*
+ * And lastly, get your services when you need them
+ */
+var configuration = new HelloWorldConfiguration();
+
+var greeter = configuration.Get<IGreeter>();
+
+greeter.Greet();
 ```
+
+Clone this project and have a look at the `ServiceBox.Sample` project for more examples and details.
 
 Why "Yet Another" library?
 ===
