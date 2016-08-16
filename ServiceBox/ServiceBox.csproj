@@ -36,6 +36,8 @@
     <Compile Include="InjectedAttribute.cs" />
     <Compile Include="ProviderAttribute.cs" />
     <Compile Include="Builder.cs" />
+    <Compile Include="AutoProviderAttribute.cs" />
+    <Compile Include="BuilderMakerAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
