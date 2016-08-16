@@ -28,3 +28,13 @@ class ViewModel : IViewModel
     }
 }
 ```
+
+Why "Yet Another" library?
+===
+
+Most of the dependency injections frameworks in .Net use the constructor to inject dependencies.
+
+This results in a constructor bloated with arguments.
+Also, everytime you need one more dependency, some code and tests need to be modified to fit new constructor.
+
+And last but not least, that was fun :)
