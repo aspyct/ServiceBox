@@ -1,17 +1,47 @@
 ﻿using System;
 namespace ServiceBox
 {
+	[AttributeUsage(AttributeTargets.Class, AllowMultiple=true)]
 	public class AutoProviderAttribute : Attribute
 	{
-		readonly bool _singleton;
-		readonly Type _iface;
-		readonly Type _cls;
+		public Type InterfaceType { get; private set; }
+		public Type ImplementationType { get; private set; }
 
-		public AutoProviderAttribute(Type iface, Type cls, bool singleton = false)
+		readonly bool _singleton;
+
+		public AutoProviderAttribute(Type iface, Type impl, bool singleton = false)
 		{
-			_iface = iface;
-			_cls = cls;
+			InterfaceType = iface;
+			ImplementationType = impl;
 			_singleton = singleton;
+		}
+
+		public Builder MakeBuilder(ServiceBox box)
+		{
+			Builder builder = new AutoBuilder {
+				Box = box,
+				Cls = ImplementationType
+			};
+
+			if (_singleton) {
+				builder = new SingletonBuilderDecorator(builder);
+			}
+
+			return builder;
+		}
+
+		class AutoBuilder : Builder
+		{
+			public Type Cls;
+			public ServiceBox Box;
+
+			public object Build()
+			{
+				var dependency = Activator.CreateInstance(Cls);
+				Box.Inject(dependency);
+
+				return dependency;
+			}
 		}
 	}
 }

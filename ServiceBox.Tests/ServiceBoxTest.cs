@@ -16,6 +16,22 @@ namespace ServiceBox.Tests
 		}
 
 		[Test]
+		public void WorksWithMethodProviders()
+		{
+			var dependency = Instance.Get<IPlayerManager>();
+
+			Assert.NotNull(dependency);
+		}
+
+		[Test]
+		public void WorksWithAutoProviders()
+		{
+			var dependency = Instance.Get<IViewModel>();
+
+			Assert.NotNull(dependency);
+		}
+
+		[Test]
 		public void MakesOnlyOneSingleton()
 		{
 			var first = Instance.Get<IPlayerManager>();
@@ -57,23 +73,30 @@ namespace ServiceBox.Tests
 		{
 			var subServiceBox = new PlayerServiceBoxChild();
 
+			IPlayerManager playerManager = subServiceBox.Get<IPlayerManager>();
+			Assert.IsInstanceOf<PlayerManager>(playerManager);
+		}
+
+		[Test]
+		public void PrefersProvidersFromSubclasses()
+		{
+			var subServiceBox = new PlayerServiceBoxChild();
+
 			IViewModel viewModel = subServiceBox.Get<IViewModel>();
-			Assert.IsInstanceOf<ViewModel>(viewModel);
+			Assert.IsInstanceOf<SpecializedViewModel>(viewModel);
 		}
 	}
 
+	[AutoProvider(
+		typeof(IViewModel),
+		typeof(ViewModel)
+	)]
 	class PlayerServiceBox : ServiceBox
 	{
 		[Provider(singleton: true)]
 		public IPlayerManager MakePlayerManager()
 		{
 			return CreateAndInject<PlayerManager>();
-		}
-
-		[Provider]
-		public IViewModel MakeViewModel()
-		{
-			return CreateAndInject<ViewModel>();
 		}
 	}
 
@@ -106,13 +129,16 @@ namespace ServiceBox.Tests
 		void PlayButtonTapped();
 	}
 
+	[AutoProvider(
+		typeof(ISubDep),
+		typeof(SubDep)
+	)]
+	[AutoProvider(
+		typeof(IViewModel),
+		typeof(SpecializedViewModel)
+	)]
 	class PlayerServiceBoxChild : PlayerServiceBox
 	{
-		[Provider]
-		public ISubDep MakeSubDep()
-		{
-			return CreateAndInject<SubDep>();
-		}
 	}
 
 	interface ISubDep
@@ -123,6 +149,14 @@ namespace ServiceBox.Tests
 	class SubDep : ISubDep
 	{
 
+	}
+
+	class SpecializedViewModel : IViewModel
+	{
+		public void PlayButtonTapped()
+		{
+			
+		}
 	}
 }
 

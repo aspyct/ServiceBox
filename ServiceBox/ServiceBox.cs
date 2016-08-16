@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -25,7 +26,7 @@ namespace ServiceBox
 			return instance;
 		}
 
-		protected void Inject(object target)
+		public void Inject(object target)
 		{
 			target.GetType()
 		      	.GetTypeInfo()
@@ -62,25 +63,58 @@ namespace ServiceBox
 		void MapBuilders()
 		{
 			// Traverse all levels of the service box
-			Type currentLevel = GetType();
+			List<TypeInfo> levels = new List<TypeInfo>();
 
+			Type currentLevel = GetType();
 			while (currentLevel != null) {
 				var typeInfo = currentLevel.GetTypeInfo();
 
-				typeInfo
-					.DeclaredMethods
-					.ForEach((method) => {
-						var attr = method.GetCustomAttribute<ProviderAttribute>();
-
-						if (attr != null) {
-							var builder = attr.MakeBuilder(this, method);
-							_builders[method.ReturnType] = builder;
-						}
-					});
-
+				levels.Add(typeInfo);
 
 				currentLevel = typeInfo.BaseType;
 			}
+
+			// In reverse order, so as to take children's providers first
+			levels.Reverse<TypeInfo>().ForEach((typeInfo) => {
+				MapAutoProviders(typeInfo);
+				MapMethodProviders(typeInfo);
+			});
+		}
+
+		void MapAutoProviders(TypeInfo typeInfo)
+		{
+			var customAttributes = typeInfo.GetCustomAttributes<AutoProviderAttribute>(
+				false // take only from this class level, not from base and derived classes
+			);
+
+			Debug.WriteLine("Mapping auto providers for " + typeInfo);
+			Debug.WriteLine("{0} attributes found", customAttributes.Count());
+				
+			customAttributes
+				.ForEach((attr) => {
+					Debug.WriteLine("Mapping {0} from {1}", attr.InterfaceType, typeInfo);
+					var builder = attr.MakeBuilder(this);
+					AddBuilder(attr.InterfaceType, builder);
+				});
+		}
+
+		void MapMethodProviders(TypeInfo typeInfo)
+		{
+			typeInfo
+				.DeclaredMethods
+				.ForEach((method) => {
+					var attr = method.GetCustomAttribute<ProviderAttribute>();
+
+					if (attr != null) {
+						var builder = attr.MakeBuilder(this, method);
+						AddBuilder(method.ReturnType, builder);
+					}
+				});
+		}
+
+		void AddBuilder(Type interfaceType, Builder builder)
+		{
+			_builders[interfaceType] = builder;
 		}
 	}
 }
