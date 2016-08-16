@@ -6,7 +6,15 @@ namespace ServiceBox.Sample
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			var configuration = new HelloWorldConfiguration();
+
+			// Alternatively, use the BaseConfiguration
+			// var configuration = new BaseConfiguration();
+
+			// Get your entry point
+			var greeter = configuration.Get<IGreeter>();
+
+			greeter.Greet();
 		}
 	}
 }

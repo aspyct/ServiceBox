@@ -1,10 +1,11 @@
 ﻿using System;
 namespace ServiceBox.Sample
 {
-	public class DefaultMessageService
+	public class DefaultMessageService : IMessageService
 	{
-		public DefaultMessageService()
+		public string GetMessage()
 		{
+			return "This is a boring default message...";
 		}
 	}
 }
