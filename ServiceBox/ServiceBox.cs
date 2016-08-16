@@ -39,11 +39,9 @@ namespace ServiceBox
 				});
 		}
 
-		public T Get<T>()
+		public T Get<T>() where T : class
 		{
-			// This is not nice...
-			// We should do it the other way around
-			return (T)Resolve(typeof(T));
+			return Resolve(typeof(T)) as T;
 		}
 
 		object Resolve(Type type)
