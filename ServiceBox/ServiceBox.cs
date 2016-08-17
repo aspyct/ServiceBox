@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
-namespace ServiceBox
+namespace Aspyct.DependencyInjection
 {
 	public abstract class ServiceBox
 	{

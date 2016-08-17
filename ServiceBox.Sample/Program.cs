@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServiceBox.Sample
+namespace Aspyct.ServiceBox.Sample
 {
 	class MainClass
 	{

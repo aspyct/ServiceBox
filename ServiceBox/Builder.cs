@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ServiceBox
+namespace Aspyct.DependencyInjection
 {
 	public interface Builder
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ServiceBox
+namespace Aspyct.ServiceBox
 {
 	public static class IEnumerableForeach
 	{

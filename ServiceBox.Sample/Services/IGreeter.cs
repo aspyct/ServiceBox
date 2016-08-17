@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ServiceBox.Sample
+namespace Aspyct.ServiceBox.Sample
 {
 	public interface IGreeter
 	{

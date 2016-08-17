@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ServiceBox
+namespace Aspyct.ServiceBox
 {
 	public class SingletonBuilderDecorator : Builder
 	{

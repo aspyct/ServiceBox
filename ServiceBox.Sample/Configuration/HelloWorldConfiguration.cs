@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ServiceBox.Sample
+namespace Aspyct.ServiceBox.Sample
 {
 	// You can redefine dependencies in child configurations
 	// Here, we will use a different implementation of IMessageService

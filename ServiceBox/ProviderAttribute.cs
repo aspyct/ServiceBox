@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace ServiceBox
+namespace Aspyct.ServiceBox
 {
 	public class ProviderAttribute : Attribute
 	{
@@ -12,7 +12,7 @@ namespace ServiceBox
 			_singleton = singleton;
 		}
 
-		public Builder MakeBuilder(ServiceBox box, MethodInfo method)
+		public Builder MakeBuilder(Box box, MethodInfo method)
 		{
 			Builder builder = new FactoryBuilder {
 				Box = box,
@@ -28,7 +28,7 @@ namespace ServiceBox
 
 		class FactoryBuilder : Builder
 		{
-			public ServiceBox Box;
+			public Box Box;
 			public MethodInfo Method;
 
 			public virtual object Build()

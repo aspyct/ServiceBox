@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ServiceBox
+namespace Aspyct.ServiceBox
 {
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple=true)]
 	public class AutoProviderAttribute : Attribute
@@ -16,7 +16,7 @@ namespace ServiceBox
 			_singleton = singleton;
 		}
 
-		public Builder MakeBuilder(ServiceBox box)
+		public Builder MakeBuilder(Box box)
 		{
 			Builder builder = new AutoBuilder {
 				Box = box,
@@ -33,7 +33,7 @@ namespace ServiceBox
 		class AutoBuilder : Builder
 		{
 			public Type Cls;
-			public ServiceBox Box;
+			public Box Box;
 
 			public object Build()
 			{
