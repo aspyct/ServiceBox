@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>ServiceBox</id>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <authors>Antoine "aspyct" d'Otreppe</authors>
     <owners>Antoine "aspyct" d'Otreppe</owners>
     <licenseUrl>https://raw.githubusercontent.com/aspyct/ServiceBox/master/LICENSE.txt</licenseUrl>

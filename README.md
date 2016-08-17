@@ -10,7 +10,7 @@ Usage example
     typeof(DefaultMessageService), // the implementing class
     singleton: true // this must be a singleton
 )]
-public class BaseConfiguration : Box
+public class BaseConfiguration : ServiceBox
 {
     // Or you can also define a method provider
     [Provider]
