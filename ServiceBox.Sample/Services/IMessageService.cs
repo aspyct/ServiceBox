@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Aspyct.ServiceBox.Sample
+namespace Aspyct.DependencyInjection.Sample
 {
 	public interface IMessageService
 	{

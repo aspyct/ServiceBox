@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aspyct.ServiceBox.Sample
+namespace Aspyct.DependencyInjection.Sample
 {
 	class MainClass
 	{

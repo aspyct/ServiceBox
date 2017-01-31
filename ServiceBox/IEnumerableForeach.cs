@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Aspyct.ServiceBox
+namespace Aspyct.DependencyInjection
 {
 	public static class IEnumerableForeach
 	{

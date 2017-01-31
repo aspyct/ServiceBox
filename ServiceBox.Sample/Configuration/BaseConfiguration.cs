@@ -1,6 +1,6 @@
-﻿using Aspyct.ServiceBox;
+﻿using Aspyct.DependencyInjection;
 
-namespace Aspyct.ServiceBox.Sample
+namespace Aspyct.DependencyInjection.Sample
 {
 	// The easiest way is to use the AutoProvider attribute
 	[AutoProvider(
@@ -8,7 +8,7 @@ namespace Aspyct.ServiceBox.Sample
 		typeof(DefaultMessageService), // the implementing class
 		singleton: true // this must be a singleton
 	)]
-	public class BaseConfiguration : Box
+	public class BaseConfiguration : ServiceBox
 	{
 		// Or you can also define a method provider
 		[Provider]

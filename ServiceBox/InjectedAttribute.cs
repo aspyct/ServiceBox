@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Aspyct.ServiceBox
+namespace Aspyct.DependencyInjection
 {
 	public class InjectedAttribute : Attribute
 	{

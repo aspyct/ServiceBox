@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Aspyct.ServiceBox.Tests
+namespace Aspyct.DependencyInjection.Tests
 {
 	[TestFixture]
 	public class Test
@@ -91,7 +91,7 @@ namespace Aspyct.ServiceBox.Tests
 		typeof(IViewModel),
 		typeof(ViewModel)
 	)]
-	class PlayerServiceBox : Box
+	class PlayerServiceBox : ServiceBox
 	{
 		[Provider(singleton: true)]
 		public IPlayerManager MakePlayerManager()
